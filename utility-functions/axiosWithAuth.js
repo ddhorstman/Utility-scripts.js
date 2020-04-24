@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const baseURL = "http://localhost:5000/api/";
-
+const defaultOptions = {};
 /**
  * A function to perform axios calls which automatically include
  * an authorization token specified by the "token" key in
  * localStorage.
  * @param {object} [options] The options to be passed to axios.create()
  */
-export function axiosWithAuth(options) {
+export function axiosWithAuth(options = defaultOptions) {
   let token = null;
   try {
     //Search for a stringified token, such as one created by useLocalStorage.
@@ -33,7 +33,7 @@ export function axiosWithAuth(options) {
  * but without automatically including an authorization token.
  * @param {object} [options] The options to be passed to axios.create()
  */
-export function axiosWithoutAuth(options) {
+export function axiosWithoutAuth(options = defaultOptions) {
   return axios.create({
     baseURL,
     ...options,
@@ -46,7 +46,7 @@ export function axiosWithoutAuth(options) {
  * if the component unmounts.
  * @param {object} [options] The options to pass on to axios.create()
  */
-export function axiosWithAuthCancellable(options) {
+export function axiosWithAuthCancellable(options = defaultOptions) {
   let source = axios.CancelToken.source();
   let unmountedInternal = false;
   /**
