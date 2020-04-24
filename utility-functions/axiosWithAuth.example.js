@@ -1,7 +1,6 @@
 import React from "react";
 
-import { axiosWithAuthCancellable } from "./axiosWithAuth";
-import axiosWithAuth from "../utils/axiosWithAuth";
+import axiosWithAuth, { axiosWithAuthCancellable } from "./axiosWithAuth";
 import {
   Container,
   LinearProgress,
@@ -61,7 +60,6 @@ export default class FriendsList extends React.Component {
     );
   }
 }
-
 
 export function FriendCard(props) {
   const [editing, setEditing] = React.useState(false);
