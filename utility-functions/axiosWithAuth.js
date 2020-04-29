@@ -74,7 +74,7 @@ export function axiosWithAuthCancellable(options) {
    * an authorization token specified by the "token" key in
    * localStorage as well as the ability to cancel the call
    * if the component unmounts using cancelAPICall().
-   * @param {object} [options] The options to be passed to axios.create()
+   * @param {object} [optionsInner] The options to be passed to axios.create()
    */
   const axiosWithAuthC = (optionsInner = options) =>
     axiosWithAuth({ ...optionsInner, cancelToken: source.token });

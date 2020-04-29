@@ -3,8 +3,8 @@
  * Not supported: Week-numbering, Swatch Time, microseconds, Timezones, Full Date/Time.
  *
  * @param {string} formatString A string specifying the format of the output.
- * @param {Date} [date] A Date object
  * See https://www.php.net/manual/en/function.date.php for details on recognized characters.
+ * @param {Date} [date] (Optional) The Date object to extract information from
  * @returns {string} A string representing the date/time.
  */
 export default function stringifyDate(formatString, date = new Date()) {

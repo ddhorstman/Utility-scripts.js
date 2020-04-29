@@ -1,9 +1,9 @@
 import React from "react";
 /**
- * This hooks works similarly to useState, except that it caches values
- * in localStorage and can retrieve a value stored in a previous session,
- * adding data persistence.
+ * This hook works similarly to useState, except that it caches values in localStorage
+ * and can retrieve a value stored in a previous session, adding data persistence.
  * NOTE: All values will be stringified, be careful when accessing them directly.
+ * Anything not supported by JSON spec (e.g. object methods) can't be stored in localStorage.
  * @param {string} key The key to be used in localStorage
  * @param {any} [initialValue] (Optional) The initial value
  */
