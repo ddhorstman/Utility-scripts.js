@@ -1,44 +1,44 @@
 import axios from "axios";
 
 const baseURL = "http://localhost:5000/api/";
-const defaultOptions = {};
+
 /**
  * A function to perform axios calls which automatically include
  * an authorization token specified by the "token" key in
  * localStorage.
  * @param {object} [options] The options to be passed to axios.create()
  */
-export function axiosWithAuth(options = defaultOptions) {
-  let token = null;
+export function axiosWithAuth(options) {
+  let token = localStorage.getItem("token");
   try {
-    //Search for a stringified token, such as one created by useLocalStorage.
-    token = JSON.parse(localStorage.getItem("token"));
+    //parse a JSON-encoded token, such as one created by useLocalStorage
+    token = JSON.parse(token);
     //console.log(`Found stringified token in localStorage: ${token}`);
   } catch {
-    //Fall back on a non-stringified token.
-    token = localStorage.getItem("token");
     //console.log(`Found non-stringified token in localStorage: ${token}`);
   }
   return axios.create({
     baseURL,
+    ...options,
     headers: {
       ...options?.headers,
       Authorization: token,
     },
-    ...options,
   });
 }
+
 /**
  * A function to perform axios calls similarly to axiosWithAuth,
  * but without automatically including an authorization token.
  * @param {object} [options] The options to be passed to axios.create()
  */
-export function axiosWithoutAuth(options = defaultOptions) {
+export function axiosWithoutAuth(options) {
   return axios.create({
     baseURL,
     ...options,
   });
 }
+
 /**
  * Create an axios instance which automatically includes
  * an authorization token specified by the "token" key in
@@ -46,13 +46,15 @@ export function axiosWithoutAuth(options = defaultOptions) {
  * if the component unmounts.
  * @param {object} [options] The options to pass on to axios.create()
  */
-export function axiosWithAuthCancellable(options = defaultOptions) {
+export function axiosWithAuthCancellable(options) {
   let source = axios.CancelToken.source();
   let unmountedInternal = false;
+
   /**
    * @returns {boolean} Whether the component has been unmounted
    */
   const unmounted = () => unmountedInternal;
+
   /**
    * A function to cancel the API call in progress and
    * prevent any downstream changes based on the unmounted() property.
@@ -62,6 +64,7 @@ export function axiosWithAuthCancellable(options = defaultOptions) {
     unmountedInternal = true;
     source.cancel("Component unmounted. Data fetching cancelled.");
   };
+
   /**
    * A function to perform axios calls which automatically include
    * an authorization token specified by the "token" key in
