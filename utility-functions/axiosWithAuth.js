@@ -10,6 +10,11 @@ const baseURL = "http://localhost:5000/api/";
  */
 export function axiosWithAuth(options) {
   let token = localStorage.getItem("token");
+  if (token === null) {
+    return console.error(
+      `Error: no token found. axiosWithAuth requires a token to be placed in localStorage under the "token" key.`
+    );
+  }
   try {
     //parse a JSON-encoded token, such as one created by useLocalStorage
     token = JSON.parse(token);
