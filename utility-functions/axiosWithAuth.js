@@ -4,15 +4,14 @@ const baseURL = "http://localhost:5000/api/";
 
 /**
  * A function to perform axios calls which automatically include
- * an authorization token specified by the "token" key in
- * localStorage.
+ * an authorization token specified by the "token" key in localStorage.
  * @param {object} [options] The options to be passed to axios.create()
  */
 export function axiosWithAuth(options) {
   let token = localStorage.getItem("token");
   if (token === null) {
-    return console.error(
-      `Error: no token found. axiosWithAuth requires a token to be placed in localStorage under the "token" key.`
+    throw new Error(
+      `No token found. axiosWithAuth requires a token to be placed in localStorage under the "token" key.`
     );
   }
   try {
@@ -75,7 +74,6 @@ export function axiosWithAuthCancellable(options) {
    * an authorization token specified by the "token" key in
    * localStorage as well as the ability to cancel the call
    * if the component unmounts using cancelAPICall().
-   * This version expects the token to be a JSON-encoded string.
    * @param {object} [options] The options to be passed to axios.create()
    */
   const axiosWithAuthC = (optionsInner = options) =>
