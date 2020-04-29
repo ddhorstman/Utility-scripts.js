@@ -28,7 +28,7 @@ export default class FriendsList extends React.Component {
     this.cancelAPICall = cancelAPICall.bind(this);
 
     axiosWithAuth()
-      .get("friends")
+      .get("/friends")
       .then(r => {
         if (unmounted()) return;
         this.setState({ friends: r.data });
@@ -70,14 +70,14 @@ export function FriendCard(props) {
 
   function updateFriend({ name, age, email }) {
     axiosWithAuth()
-      .put(`friends/${state.id}`, { name, age, email })
+      .put(`/friends/${state.id}`, { name, age, email })
       .then(r => setState(r.data.find(x => x.id === state.id)))
       .catch(console.error);
   }
 
   function deleteFriend() {
     axiosWithAuth()
-      .delete(`friends/${state.id}`)
+      .delete(`/friends/${state.id}`)
       //.then(r => { console.log(r); return r; })
       .then(r => props.setFriends(r.data))
       .catch(console.error);
